@@ -66,8 +66,6 @@ image_1.jpg
 
 The utility uses a per-user Windows Registry integration and does not require Administrator privileges for normal installation.
 
-> Note: exact filenames inside the v1.0.0 release package are documented separately while the original release source package is being verified.
-
 ## Usage
 
 1. Select one or more `.png` files in File Explorer.
@@ -120,7 +118,7 @@ See [`CHANGELOG.md`](CHANGELOG.md).
 
 ## License
 
-The repository documentation is provided under the MIT License. Source-code licensing should be applied to verified source files when they are added.
+This project is licensed under the MIT License.
 
 See [`LICENSE`](LICENSE).
 
