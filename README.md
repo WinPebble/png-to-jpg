@@ -102,15 +102,17 @@ The current implementation is based on:
 - .NET / `System.Drawing`
 - Windows per-user Registry context-menu integration
 
-## Source status
+## Source
 
-The public `v1.0.0` binary release was published before the repository source tree was standardized.
+The original `v1.0.0` release package has been verified against the SHA-256
+recorded for the published GitHub release.
 
-To avoid presenting reconstructed code as the exact historical source, the original `v1.0.0` scripts are not yet represented in `src/` until they can be verified against the published release package.
+The exact historical package files are preserved under [`src/`](src/).
 
-See [`SOURCE_STATUS.md`](SOURCE_STATUS.md).
+See [`SOURCE_STATUS.md`](SOURCE_STATUS.md) for verification details and known
+implementation notes.
 
-Future releases should publish the corresponding source and release assets together.
+Future releases should publish their corresponding source and release assets together.
 
 ## Changelog
 

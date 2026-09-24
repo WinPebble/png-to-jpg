@@ -1,28 +1,44 @@
 # Source status
 
-## v1.0.0
+## v1.0.0 — Verified
 
-The `v1.0.0` release asset was published before the GitHub repository was standardized.
+The original public release asset has now been verified.
 
-Known implementation characteristics of the final release include:
+Release asset:
 
-- PowerShell-based conversion.
-- .NET / `System.Drawing` image processing.
-- Per-user Windows Registry context-menu registration.
-- No Administrator permission required for normal installation.
-- Multi-file selection support.
+`WinPebble-PNG-to-JPG.zip`
+
+Release SHA-256:
+
+`5e9ba8c06d43ac2bf8a3dd5557d843246e6af7dbe4ee1c29bde3cfcf0c842d00`
+
+The package supplied for source verification produced the same SHA-256 as the
+asset recorded by GitHub for release `v1.0.0`.
+
+The exact files from that package are preserved under [`src/`](src/).
+
+## Verified implementation
+
+The release uses:
+
+- PowerShell-based PNG conversion.
+- .NET / `System.Drawing`.
 - JPEG quality 100.
-- PNG transparency composited onto a white background.
-- Source PNG files preserved.
-- Output written beside the source file.
-- Existing JPG files are not overwritten.
-- File Explorer menu label: **Convert PNG to JPG**.
+- A 24-bit RGB output bitmap with a white background, so transparent PNG areas become white.
+- Original image pixel width and height.
+- Output in the same directory as the source PNG.
+- Collision-safe filenames such as `_1`, `_2`, and so on.
+- Per-user Windows Registry integration under `HKEY_CURRENT_USER`.
+- Installation files stored under `%LOCALAPPDATA%\PNGtoJPG`.
+- A File Explorer menu label of **Convert PNG to JPG**.
+- No background service.
+- No network operation in the conversion, installation, or uninstall scripts.
 
-However, the exact original script contents of the already-published `v1.0.0`
-package have not yet been verified against the release asset.
+## Known v1.0.0 implementation note
 
-For transparency, reconstructed code is intentionally not being committed as
-the historical source of `v1.0.0`.
+Conversion errors launched from File Explorer are intentionally caught without
+showing an error message. This behavior is preserved as part of the historical
+`v1.0.0` source.
 
-Once the original scripts are verified, they can be added under `src/` and
-this notice can be updated.
+A future release should improve user-visible error handling rather than
+rewriting the published historical source.

@@ -9,7 +9,21 @@
 | Size | 354,691 bytes |
 | SHA-256 | `5e9ba8c06d43ac2bf8a3dd5557d843246e6af7dbe4ee1c29bde3cfcf0c842d00` |
 | Windows | Windows 10 / 11 |
-| Architecture | PowerShell/.NET-based; no separate native architecture-specific binary documented |
+| Architecture | PowerShell/.NET-based; no separate native architecture-specific binary |
 | Internet required for conversion | No |
 | Telemetry | No |
 | Background service | No |
+| Source verification | Verified against the published release package |
+
+## Package contents
+
+- `ConvertPNGtoJPG.ps1`
+- `Install_or_Update.ps1`
+- `Uninstall.ps1`
+- `UPDATE_MENU.bat`
+- `UNINSTALL.bat`
+- `README.txt`
+- `user_icon.ico`
+- `user_icon_preview.png`
+
+The exact historical package files are stored under [`src/`](src/).
