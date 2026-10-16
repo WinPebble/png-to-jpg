@@ -130,8 +130,8 @@ https://winpebble.com
 
 No ads inside the app. No tracking. No account required.
 
-## v2 development — Gate A/B
+## v2 development — Gates A/B/C
 
 The public release remains v1.0.0. The `v2/store-modernization` branch contains an unreleased native x64 WIC core (`2.0.0-dev.1`). Historical v1 files under src/ are preserved.
 
-See [discovery](docs/GATE_A_DISCOVERY.md) and [validation](docs/GATE_B_VALIDATION.md) for evidence, build commands and limitations. This development core has no Explorer integration or MSIX yet. It requires no separately installed runtime for users. Gate C awaits visual quality approval; no merge or Store publication is authorized.
+See [discovery](docs/GATE_A_DISCOVERY.md), [core validation](docs/GATE_B_VALIDATION.md) and [Explorer validation](docs/GATE_C_VALIDATION.md) for evidence, build commands and limitations. User quality approval was received on 2026-10-16. Native Explorer integration and an unsigned full development MSIX are now available for testing. No merge or Store publication is authorized.

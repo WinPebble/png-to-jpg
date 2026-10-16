@@ -1,4 +1,4 @@
-name: PNG to JPG v2 - Gate B
+name: PNG to JPG v2 - Gates B and C
 on:
   workflow_dispatch:
   pull_request:
@@ -22,6 +22,11 @@ jobs:
       - name: Smoke tests
         shell: pwsh
         run: ./tests/Smoke-Test.ps1 -ExePath "$PWD/build/Release/WinPebble.PNGToJPG.exe"
+      - name: Verify shell metadata and native COM behavior
+        shell: pwsh
+        run: |
+          ./tests/Verify-Binary.ps1 -ExePath build/Release/WinPebble.PNGToJPG.Shell.dll
+          ./tests/Shell-Test.ps1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -29,6 +34,11 @@ jobs:
         run: python -m pip install Pillow==11.3.0
       - name: Hardening and v1 comparison
         run: python tests/gate_b.py --exe build/Release/WinPebble.PNGToJPG.exe
+      - name: Full development MSIX schema and payload
+        shell: pwsh
+        run: |
+          ./scripts/Build-Dev-MSIX.ps1
+          python tests/verify_dev_package.py artifacts/gate-c/WinPebble-PNG-to-JPG-2.0.0-dev.1-unsigned.msix
       - name: Collect development evidence
         shell: pwsh
         run: |
@@ -41,4 +51,13 @@ jobs:
         with:
           name: WinPebble-PNG-to-JPG-v2-GateB-win-x64
           path: artifacts/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WinPebble-PNG-to-JPG-v2-GateC-full-layout-win-x64
+          path: |
+            artifacts/gate-c/*.msix
+            artifacts/gate-c/SHA256SUMS.txt
+            artifacts/gate-c/layout-*/
+            artifacts/SOURCE_COMMIT.txt
           if-no-files-found: error

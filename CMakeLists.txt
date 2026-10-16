@@ -56,4 +56,18 @@ set_target_properties(
         OUTPUT_NAME "WinPebble.PNGToJPG"
 )
 
+add_library(WinPebble.PNGToJPG.Shell SHARED shell/ExplorerCommand.cpp shell/ExplorerCommand.def shell/version.rc)
+target_compile_features(WinPebble.PNGToJPG.Shell PRIVATE cxx_std_20)
+target_compile_definitions(WinPebble.PNGToJPG.Shell PRIVATE UNICODE _UNICODE)
+target_link_libraries(WinPebble.PNGToJPG.Shell PRIVATE shell32 shlwapi ole32 user32)
+add_executable(Shell-Probe tests/Shell-Probe.cpp)
+target_compile_features(Shell-Probe PRIVATE cxx_std_20)
+target_compile_definitions(Shell-Probe PRIVATE UNICODE _UNICODE)
+target_link_libraries(Shell-Probe PRIVATE shell32 shlwapi ole32)
+if(MSVC)
+    foreach(target WinPebble.PNGToJPG.Shell Shell-Probe)
+        target_compile_options(${target} PRIVATE /W4 /WX /permissive- /EHsc /utf-8)
+    endforeach()
+endif()
+
 

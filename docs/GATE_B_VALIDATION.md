@@ -1,6 +1,6 @@
 # Gate B — compiled core development validation
 
-Status: technical validation PASS locally and in CI; user visual quality approval required before Gate C. This is not a v2.0.0 release or a Store package.
+Status: technical validation PASS locally and in CI; user approved visual quality on 2026-10-16 and authorized Gate C. This is not a v2.0.0 release or a Store package.
 
 ## CI evidence
 
@@ -30,7 +30,7 @@ Corrupt data, JPEG mislabeled as PNG, truncated PNG chunks, missing file, non-PN
 
 ## Known scope and remaining approval
 
-- User must review representative real-image quality before Gate C. Synthetic pixel equality is evidence, not that approval.
+- User approved quality on 2026-10-16. Synthetic pixel equality was supporting evidence; the approval came directly from the user.
 - Windows 10 and earlier Windows 11 builds are untested. This core gate does not establish modern Explorer menu, install/uninstall or MSIX support.
 - Pipeline intentionally follows v1 raw RGB behavior: no ICC conversion/preservation or gamma correction. sRGB ICC/gAMA fixtures pass parity; arbitrary wide-gamut profiles and camera/photo corpus still need visual review.
 - Chunk CRC validation is not a complete independent PNG/DEFLATE conformance validator. WIC may recover malformed compressed data whose chunks/CRCs are valid. Abrupt process termination or external interference can defeat best-effort cleanup; ordinary tested error paths clean up.
@@ -52,4 +52,4 @@ Pillow and Python are test-only dependencies. End users need only the EXE and Wi
 
 ## Next gate
 
-Wait for user quality approval, then implement the thin IExplorerCommand DLL (Gate C). Gate D requires exact PNG-to-JPG Partner Center identity. Merge, Store submission and publication each remain subject to explicit user confirmation.
+Gate C is authorized and tracked in GATE_C_VALIDATION.md. Gate D requires exact PNG-to-JPG Partner Center identity. Merge, Store submission and publication each remain subject to explicit user confirmation.
