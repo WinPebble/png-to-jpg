@@ -20,7 +20,9 @@ int wmain(int argc, wchar_t** argv) {
     try {
         ComPtr<IExplorerCommand> command;
         if (registered) {
-            Check(SUCCEEDED(CoCreateInstance(CommandId, nullptr, CLSCTX_LOCAL_SERVER, IID_PPV_ARGS(&command))), "registered activation");
+            const HRESULT activation = CoCreateInstance(CommandId, nullptr, CLSCTX_LOCAL_SERVER, IID_PPV_ARGS(&command));
+            if (FAILED(activation)) std::cerr << "CoCreateInstance HRESULT=0x" << std::hex << static_cast<unsigned long>(activation) << std::dec << '\n';
+            Check(SUCCEEDED(activation), "registered activation");
         } else {
             module = LoadLibraryW(argv[1]);
             Check(module != nullptr, "LoadLibrary");

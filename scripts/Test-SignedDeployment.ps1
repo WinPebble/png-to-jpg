@@ -47,14 +47,28 @@ $ownsTrust=$false
 $initial=Join-Path $out 'LOCAL-TEST-ONLY-2.0.0.0.msix'
 $update=Join-Path $out 'LOCAL-TEST-ONLY-2.0.0.1.msix'
 Copy-Item -LiteralPath $PackagePath -Destination $initial
+function Test-ExplorerContext([string]$Phase,[switch]$ExpectAbsent) {
+    $workerResult=Join-Path $out ($Phase+'-shell.json')
+    # Use the interactive Shell broker; the worker explicitly rejects elevation.
+    $worker=Join-Path $PSScriptRoot 'Invoke-DeploymentShellTest.ps1'
+    $command="& '"+$worker.Replace("'","''")+"' -Probe '"+$Probe.Replace("'","''")+"' -ResultPath '"+$workerResult.Replace("'","''")+"'"
+    if ($ExpectAbsent) { $command+=' -ExpectAbsent' }
+    $encoded=[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
+    $shell=New-Object -ComObject Shell.Application
+    $shell.ShellExecute((Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'),('-NoProfile -ExecutionPolicy Bypass -EncodedCommand '+$encoded),$root,'open',0)
+    $deadline=(Get-Date).AddSeconds(90)
+    while (!(Test-Path -LiteralPath $workerResult) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 200 }
+    if (!(Test-Path -LiteralPath $workerResult)) { throw "Unelevated worker timed out: $Phase" }
+    $evidence=Get-Content -LiteralPath $workerResult -Raw | ConvertFrom-Json
+    if (!$evidence.Passed -or $evidence.Elevated) { throw "Explorer-context test failed ($Phase): $($evidence.Error). See $workerResult" }
+}
 function Assert-Installed([string]$Version) {
     $p=Get-AppxPackage -Name $official.Name
     if (!$p -or [string]$p.Version -cne $Version -or $p.PackageFamilyName -cne $official.PackageFamilyName -or $p.IsDevelopmentMode -or [string]$p.Status -ne 'Ok') { throw "Installed package state mismatch at $Version" }
     foreach ($name in $binaryHashes.Keys) {
         if ((Get-FileHash -LiteralPath (Join-Path $p.InstallLocation $name)).Hash -cne $binaryHashes[$name]) { throw "Installed payload changed: $name" }
     }
-    & (Join-Path $root 'tests/Shell-Test.ps1') -Probe $Probe -Registered | Out-Host
-    if (!$?) { throw 'Registered shell test failed' }
+    Test-ExplorerContext ('installed-'+$Version)
     return $p
 }
 try {
@@ -98,8 +112,7 @@ try {
     $result.Steps+= 'Signed update + unchanged binaries + registered COM conversion + LocalState retention PASS'
     Remove-AppxPackage -Package $p.PackageFullName
     if (Get-AppxPackage -Name $official.Name) { throw 'Uninstall left a package registration' }
-    & $Probe --registered --contract
-    if ($LASTEXITCODE -eq 0) { throw 'COM activation unexpectedly survives package uninstall' }
+    Test-ExplorerContext 'uninstalled' -ExpectAbsent
     $result.Steps+= 'Uninstall + package absence + COM activation removal PASS'
     foreach ($other in $baseline) {
         $current=Get-AppxPackage -Name $other.Name

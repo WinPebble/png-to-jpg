@@ -34,6 +34,15 @@ Reports and public certificates are retained under
 use its recorded certificate thumbprint/package name to inspect and clean only
 the test artifacts; normal try/finally cleanup cannot run after host termination.
 
+The first user run signed and verified both clones and installed the initial
+package with matching payload hashes, but stopped at COM activation from the
+Administrator process. Cleanup reported zero errors. The elevated caller differs
+from normal Explorer; its role in the failure is a hypothesis, not a confirmed
+app defect. The revised runner uses the interactive Shell broker to launch a
+worker that rejects elevation, retains its transcript/result and tests registered
+COM. The probe now prints the activation HRESULT. A fresh lifecycle run is
+required; successful signing alone is not a deployment PASS.
+
 ```powershell
 Set-Location 'C:\Users\aries\Projects\WinPebble\png-to-jpg'
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-SignedDeployment.ps1
