@@ -1,0 +1,200 @@
+{
+  "tests": [
+    "single/batch, Unicode, spaces, nested, >260-char paths, RGB/grayscale/indexed/16-bit, source hashes, JPEG DQT maximum",
+    "transparent and partial alpha (including indexed transparency)",
+    "8 concurrent processes after existing (2): contiguous (3)..(10), no overwrite",
+    "read-only input",
+    "corrupt, mislabeled JPEG, truncated chunks, missing, wrong extension, mixed batch, empty args; no temp orphan",
+    "permission denied and finalization failure: no final JPG or orphan temp",
+    "v1 comparison: size, time including process startup, decoded RGB RMSE for all valid fixtures",
+    "24 MP stress: 0.121s"
+  ],
+  "comparisons": [
+    {
+      "input": "opaque.png",
+      "dimensions": [
+        257,
+        193
+      ],
+      "v1_bytes": 1515,
+      "v2_bytes": 1515,
+      "v1_seconds": 0.4522,
+      "v2_seconds": 0.0371,
+      "v1_peak_bytes": 83337216,
+      "v2_peak_bytes": 11603968,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "alpha.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "v1_bytes": 887,
+      "v2_bytes": 887,
+      "v1_seconds": 0.4309,
+      "v2_seconds": 0.0305,
+      "v1_peak_bytes": 83210240,
+      "v2_peak_bytes": 11354112,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "transparent.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "v1_bytes": 691,
+      "v2_bytes": 691,
+      "v1_seconds": 0.3869,
+      "v2_seconds": 0.0333,
+      "v1_peak_bytes": 83640320,
+      "v2_peak_bytes": 11317248,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "\u1ea3nh ti\u1ebfng Vi\u1ec7t.PNG",
+      "dimensions": [
+        77,
+        55
+      ],
+      "v1_bytes": 711,
+      "v2_bytes": 711,
+      "v1_seconds": 0.4267,
+      "v2_seconds": 0.0399,
+      "v1_peak_bytes": 83247104,
+      "v2_peak_bytes": 11370496,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "gray.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "v1_bytes": 2924,
+      "v2_bytes": 2924,
+      "v1_seconds": 0.4051,
+      "v2_seconds": 0.0287,
+      "v1_peak_bytes": 83148800,
+      "v2_peak_bytes": 11374592,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "indexed.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "v1_bytes": 696,
+      "v2_bytes": 696,
+      "v1_seconds": 0.3931,
+      "v2_seconds": 0.0297,
+      "v1_peak_bytes": 83402752,
+      "v2_peak_bytes": 11341824,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "16bit-0.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "v1_bytes": 689,
+      "v2_bytes": 689,
+      "v1_seconds": 0.4062,
+      "v2_seconds": 0.0388,
+      "v1_peak_bytes": 82984960,
+      "v2_peak_bytes": 11345920,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "16bit-2.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "v1_bytes": 689,
+      "v2_bytes": 689,
+      "v1_seconds": 0.4116,
+      "v2_seconds": 0.0297,
+      "v1_peak_bytes": 83623936,
+      "v2_peak_bytes": 11358208,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "16bit-4.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "v1_bytes": 691,
+      "v2_bytes": 691,
+      "v1_seconds": 0.3949,
+      "v2_seconds": 0.034,
+      "v1_peak_bytes": 83369984,
+      "v2_peak_bytes": 11350016,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "16bit-6.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "v1_bytes": 691,
+      "v2_bytes": 691,
+      "v1_seconds": 0.3901,
+      "v2_seconds": 0.0427,
+      "v1_peak_bytes": 83079168,
+      "v2_peak_bytes": 11354112,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "icc-srgb.png",
+      "dimensions": [
+        128,
+        128
+      ],
+      "v1_bytes": 887,
+      "v2_bytes": 887,
+      "v1_seconds": 0.4676,
+      "v2_seconds": 0.0426,
+      "v1_peak_bytes": 83165184,
+      "v2_peak_bytes": 11358208,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "gamma.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "v1_bytes": 694,
+      "v2_bytes": 694,
+      "v1_seconds": 0.4545,
+      "v2_seconds": 0.0513,
+      "v1_peak_bytes": 83095552,
+      "v2_peak_bytes": 11366400,
+      "rmse_vs_v1": 0.0
+    },
+    {
+      "input": "detail.png",
+      "dimensions": [
+        512,
+        384
+      ],
+      "v1_bytes": 152488,
+      "v2_bytes": 152488,
+      "v1_seconds": 0.4293,
+      "v2_seconds": 0.0489,
+      "v1_peak_bytes": 84856832,
+      "v2_peak_bytes": 12701696,
+      "rmse_vs_v1": 0.0
+    }
+  ],
+  "stress_seconds": 0.12080389994662255,
+  "stress_peak_bytes": 13344768,
+  "os_version": "sys.getwindowsversion(major=10, minor=0, build=26300, platform=2, service_pack='')",
+  "exe_sha256": "acae0d900fba1b1fc18cc6107ce7b044bb5fd1f435061ac68d0ed5fa77276e6a"
+}

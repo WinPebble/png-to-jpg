@@ -1,0 +1,44 @@
+name: PNG to JPG v2 - Gate B
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: ['v2/**']
+permissions:
+  contents: read
+jobs:
+  build-and-test:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure x64 Release
+        run: cmake -S . -B build -A x64
+      - name: Build
+        run: cmake --build build --config Release --parallel
+      - name: Verify metadata and architecture
+        shell: pwsh
+        run: ./tests/Verify-Binary.ps1
+      - name: Smoke tests
+        shell: pwsh
+        run: ./tests/Smoke-Test.ps1 -ExePath "$PWD/build/Release/WinPebble.PNGToJPG.exe"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test-only dependencies
+        run: python -m pip install Pillow==11.3.0
+      - name: Hardening and v1 comparison
+        run: python tests/gate_b.py --exe build/Release/WinPebble.PNGToJPG.exe
+      - name: Collect development evidence
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force artifacts | Out-Null
+          Copy-Item build/Release/WinPebble.PNGToJPG.exe artifacts/
+          Get-ChildItem .work -Recurse -Filter report.json | Copy-Item -Destination artifacts/
+          (Get-FileHash artifacts/WinPebble.PNGToJPG.exe).Hash.ToLower() + '  WinPebble.PNGToJPG.exe' | Set-Content artifacts/SHA256SUMS.txt
+          git rev-parse HEAD | Set-Content artifacts/SOURCE_COMMIT.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WinPebble-PNG-to-JPG-v2-GateB-win-x64
+          path: artifacts/
+          if-no-files-found: error
