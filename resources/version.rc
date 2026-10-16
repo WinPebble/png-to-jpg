@@ -1,5 +1,7 @@
 #include <windows.h>
 
+101 ICON "branding/WinPebble.ico"
+
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 2,0,0,1
  PRODUCTVERSION 2,0,0,1

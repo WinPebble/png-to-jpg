@@ -18,6 +18,7 @@ add_executable(
 )
 
 target_compile_features(WinPebble.PNGToJPG PRIVATE cxx_std_20)
+target_include_directories(WinPebble.PNGToJPG PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
 
 target_compile_definitions(
     WinPebble.PNGToJPG

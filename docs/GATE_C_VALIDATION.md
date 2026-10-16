@@ -13,7 +13,7 @@ The static-runtime x64 DLL exposes IExplorerCommand and a class factory. It read
 - Development identity: `WinPebble.PNGToJPG.Dev`, publisher `CN=WinPebble PNG to JPG Development`, version `2.0.0.1`, x64.
 - Manifest associates only `.png`, uses a COM surrogate and `runFullTrust` for the packaged Win32 core. No sparse/external content, services or startup tasks.
 - Windows 11 development target MinVersion `10.0.22000.0`; actual local UI test build is 26300. The floor does not establish testing on every Windows 11 build.
-- Approved existing v1 artwork is reused for the shell icon and package images. No PDF-to-Image identity or artwork is reused.
+- The Gate C baseline used the existing product artwork. After Gate C, the user requested shared WinPebble branding; see [branding scope](../branding/SHARED_BRAND_ICON.md). Only shared brand artwork is reused from the sibling project; no PDF-to-Image package identity is reused.
 
 ## Verified locally
 
