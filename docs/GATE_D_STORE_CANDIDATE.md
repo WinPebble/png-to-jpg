@@ -52,6 +52,8 @@ python tests/verify_dev_package.py artifacts/store/WinPebble-PNG-to-JPG-2.0.0.0-
 # From an Administrator PowerShell, after reviewing the candidate layout:
 $layout=(Get-Content artifacts/store/build-provenance.json -Raw | ConvertFrom-Json).Layout
 ./scripts/Test-Store-WACK.ps1 -Layout $layout
+# Prefer testing the exact downloaded CI package:
+./scripts/Test-Store-WACK.ps1 -PackagePath 'path/to/WinPebble-PNG-to-JPG-2.0.0.0-Store-candidate.msix'
 ```
 
 Official references: [Store package requirements](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/app-package-requirements), [WACK CLI](https://learn.microsoft.com/en-us/windows/uwp/debug-test-perf/windows-app-certification-kit).
