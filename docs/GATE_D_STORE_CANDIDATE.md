@@ -42,6 +42,13 @@ The first automated WACK attempt was blocked by Windows requiring elevation. The
 
 Signed MSIX install/update/uninstall validation, WACK review, any required fixes, user review and an authorized PR merge remain outstanding. Final submission artifacts must be rebuilt by successful CI from the exact approved main commit after merge. Branch CI artifacts are review candidates only. No upload, submission, certification request, merge or publishing has occurred.
 
+The next checkpoint is prepared in [signed deployment instructions](SIGNED_DEPLOYMENT_TEST.md)
+and `scripts/Test-SignedDeployment.ps1`. Syntax and local update-clone repacking
+were checked; the signed lifecycle itself is pending an Administrator run. The
+original unsigned WACK candidate remains unchanged. Draft Store listing and
+certification notes are in [submission draft](STORE_SUBMISSION_DRAFT.md); public
+URLs and commercial/listing choices remain to be supplied or approved.
+
 ## Reproduce
 
 ```powershell
