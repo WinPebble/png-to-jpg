@@ -1,6 +1,16 @@
 # Gate B — compiled core development validation
 
-Status: local Windows 11 validation PASS; CI and user visual quality approval required before Gate C. This is not a v2.0.0 release or a Store package.
+Status: technical validation PASS locally and in CI; user visual quality approval required before Gate C. This is not a v2.0.0 release or a Store package.
+
+## CI evidence
+
+- Source commit `e7007fb4e1bc4e38fbd0ff64658f88b5f608430f`.
+- Push build: https://github.com/WinPebble/png-to-jpg/actions/runs/38848900855 — PASS.
+- PR build: https://github.com/WinPebble/png-to-jpg/actions/runs/38848906774 — PASS.
+- Artifact: `WinPebble-PNG-to-JPG-v2-GateB-win-x64`, containing EXE, SHA256SUMS, SOURCE_COMMIT and measured report.json.
+- CI EXE SHA-256 `2eb9c796bd0d5c8a7b253754271986acec8d5718036db1061b19ed79cab3f626`.
+- Downloaded push artifact was hash-verified and passed metadata + smoke checks on the local Windows 11 machine.
+- Earlier d059b0d builds failed because starter macros were defined twice under /WX; fixed at the source, with green independent CMake builds above.
 
 ## Local evidence
 
