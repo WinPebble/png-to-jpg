@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][string]$Probe,[Parameter(Mandatory)][string]$ResultPath,[switch]$ExpectAbsent)
+param([Parameter(Mandatory)][string]$Probe,[Parameter(Mandatory)][string]$ResultPath,[switch]$ExpectAbsent,[string]$DirectDll)
 $ErrorActionPreference='Stop'
 $principal=[Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
 $result=[ordered]@{ Passed=$false; Elevated=$principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator); ExpectedAbsent=[bool]$ExpectAbsent }
@@ -12,6 +12,8 @@ try {
             $code=$LASTEXITCODE
             $result.Diagnostic=@($diagnostic)
             if ($code -eq 0 -or ($diagnostic -join ' ') -notmatch 'HRESULT=0x80040154') { throw 'Expected REGDB_E_CLASSNOTREG after uninstall' }
+        } elseif ($DirectDll) {
+            & (Join-Path $PSScriptRoot '../tests/Shell-Test.ps1') -Probe $Probe -Dll $DirectDll | Out-Host
         } else {
             & (Join-Path $PSScriptRoot '../tests/Shell-Test.ps1') -Probe $Probe -Registered | Out-Host
         }

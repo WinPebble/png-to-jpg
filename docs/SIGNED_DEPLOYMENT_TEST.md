@@ -52,6 +52,15 @@ An unelevated-worker preflight now runs before certificate creation or deploymen
 The second run also reported zero cleanup errors. The full elevated-to-unelevated
 lifecycle still requires the user's next Administrator run.
 
+The third run confirmed Elevated=false, but its Windows PowerShell worker could
+not resolve Get-FileHash. The shell test now hashes through streaming .NET SHA256
+and uses UTF-8 BOM so Windows PowerShell preserves Vietnamese fixture names.
+The full direct shell workflow was successfully run through the actual desktop
+broker against the extracted CI binaries (single/multi/Unicode/collision/source
+hash checks). This direct preflight now runs before creating certificates or
+installing packages. Registered signed deployment still needs a fresh full run;
+direct DLL test success does not replace that checkpoint.
+
 ```powershell
 Set-Location 'C:\Users\aries\Projects\WinPebble\png-to-jpg'
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-SignedDeployment.ps1

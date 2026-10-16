@@ -1,5 +1,11 @@
-param([string]$Probe='build/Release/Shell-Probe.exe',[string]$Dll='build/Release/WinPebble.PNGToJPG.Shell.dll',[switch]$Registered)
+﻿param([string]$Probe='build/Release/Shell-Probe.exe',[string]$Dll='build/Release/WinPebble.PNGToJPG.Shell.dll',[switch]$Registered)
 $ErrorActionPreference='Stop'
+function Get-TestSHA256([string]$Path) {
+    $stream=[IO.File]::OpenRead($Path)
+    $sha=[Security.Cryptography.SHA256]::Create()
+    try { return [BitConverter]::ToString($sha.ComputeHash($stream)).Replace('-','') }
+    finally { $sha.Dispose(); $stream.Dispose() }
+}
 $root=Join-Path $PSScriptRoot ('../.work/shell-'+[guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Force $root | Out-Null
 $root=(Resolve-Path $root).Path
@@ -14,7 +20,7 @@ $space=Join-Path $root 'space name.png'
 $jpg=Join-Path $root 'wrong.jpg'
 Copy-Item -LiteralPath $png -Destination $jpg
 $before=@{}
-foreach ($file in Get-ChildItem $root -Filter '*.png') { $before[$file.FullName]=(Get-FileHash $file.FullName).Hash }
+foreach ($file in Get-ChildItem $root -Filter '*.png') { $before[$file.FullName]=Get-TestSHA256 $file.FullName }
 $target=if ($Registered) { '--registered' } else { (Resolve-Path $Dll).Path }
 function Probe([string]$Mode,[string[]]$Paths) {
     & $script:Probe $target $Mode @Paths
@@ -36,7 +42,7 @@ Probe --invoke @($png)
 $deadline=(Get-Date).AddSeconds(15)
 while (!(Test-Path (Join-Path $root 'single (2).jpg')) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 100 }
 if (!(Test-Path (Join-Path $root 'single (2).jpg'))) { throw 'Shell collision conversion failed' }
-foreach ($path in $before.Keys) { if ((Get-FileHash -LiteralPath $path).Hash -ne $before[$path]) { throw 'Source changed via shell' } }
+foreach ($path in $before.Keys) { if ((Get-TestSHA256 $path) -ne $before[$path]) { throw 'Source changed via shell' } }
 if (Get-ChildItem $root -Filter '*.tmp') { throw 'Temporary files left via shell' }
 @{ Passed=$true; Registered=[bool]$Registered; Fixtures=$root; SourceHashes=$before } | ConvertTo-Json | Set-Content (Join-Path $root 'shell-report.json')
 Write-Host "Shell contract + launch tests PASS: $root"

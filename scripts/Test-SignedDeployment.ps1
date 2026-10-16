@@ -47,12 +47,13 @@ $ownsTrust=$false
 $initial=Join-Path $out 'LOCAL-TEST-ONLY-2.0.0.0.msix'
 $update=Join-Path $out 'LOCAL-TEST-ONLY-2.0.0.1.msix'
 Copy-Item -LiteralPath $PackagePath -Destination $initial
-function Test-ExplorerContext([string]$Phase,[switch]$ExpectAbsent) {
+function Test-ExplorerContext([string]$Phase,[switch]$ExpectAbsent,[string]$DirectDll) {
     $workerResult=Join-Path $out ($Phase+'-shell.json')
     # Use the interactive Shell broker; the worker explicitly rejects elevation.
     $worker=Join-Path $PSScriptRoot 'Invoke-DeploymentShellTest.ps1'
     $command="& '"+$worker.Replace("'","''")+"' -Probe '"+$Probe.Replace("'","''")+"' -ResultPath '"+$workerResult.Replace("'","''")+"'"
     if ($ExpectAbsent) { $command+=' -ExpectAbsent' }
+    if ($DirectDll) { $command+=" -DirectDll '"+$DirectDll.Replace("'","''")+"'" }
     $encoded=[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
     # A freshly created Shell.Application can live in this elevated process.
     # Get Application through the existing desktop view hosted by Explorer.
@@ -80,6 +81,7 @@ function Assert-Installed([string]$Version) {
 try {
     # Reject a bad broker/token before creating certificates or installing anything.
     Test-ExplorerContext 'preflight' -ExpectAbsent
+    Test-ExplorerContext 'preflight-direct' -DirectDll (Join-Path $layout 'WinPebble.PNGToJPG.Shell.dll')
     # Non-exportable temporary leaf key. Never export a PFX or add a root CA.
     $cert=New-SelfSignedCertificate -Type Custom -Subject $official.Publisher -KeyUsage DigitalSignature -KeyAlgorithm RSA -KeyLength 2048 -HashAlgorithm SHA256 -KeyExportPolicy NonExportable -CertStoreLocation 'Cert:\CurrentUser\My' -NotAfter (Get-Date).AddDays(2) -FriendlyName 'WinPebble PNG to JPG temporary deployment test' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3','2.5.29.19={text}')
     $result.CertificateThumbprint=$cert.Thumbprint
