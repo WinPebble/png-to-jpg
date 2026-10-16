@@ -7,7 +7,7 @@
     "corrupt, mislabeled JPEG, truncated chunks, missing, wrong extension, mixed batch, empty args; no temp orphan",
     "permission denied and finalization failure: no final JPG or orphan temp",
     "v1 comparison: size, time including process startup, decoded RGB RMSE for all valid fixtures",
-    "24 MP stress: 0.121s"
+    "24 MP stress: 0.124s"
   ],
   "comparisons": [
     {
@@ -18,10 +18,10 @@
       ],
       "v1_bytes": 1515,
       "v2_bytes": 1515,
-      "v1_seconds": 0.4522,
-      "v2_seconds": 0.0371,
-      "v1_peak_bytes": 83337216,
-      "v2_peak_bytes": 11603968,
+      "v1_seconds": 0.3797,
+      "v2_seconds": 0.0299,
+      "v1_peak_bytes": 83410944,
+      "v2_peak_bytes": 11599872,
       "rmse_vs_v1": 0.0
     },
     {
@@ -32,10 +32,10 @@
       ],
       "v1_bytes": 887,
       "v2_bytes": 887,
-      "v1_seconds": 0.4309,
-      "v2_seconds": 0.0305,
-      "v1_peak_bytes": 83210240,
-      "v2_peak_bytes": 11354112,
+      "v1_seconds": 0.3927,
+      "v2_seconds": 0.0355,
+      "v1_peak_bytes": 83161088,
+      "v2_peak_bytes": 11317248,
       "rmse_vs_v1": 0.0
     },
     {
@@ -46,10 +46,10 @@
       ],
       "v1_bytes": 691,
       "v2_bytes": 691,
-      "v1_seconds": 0.3869,
-      "v2_seconds": 0.0333,
-      "v1_peak_bytes": 83640320,
-      "v2_peak_bytes": 11317248,
+      "v1_seconds": 0.401,
+      "v2_seconds": 0.0277,
+      "v1_peak_bytes": 83275776,
+      "v2_peak_bytes": 11313152,
       "rmse_vs_v1": 0.0
     },
     {
@@ -60,10 +60,10 @@
       ],
       "v1_bytes": 711,
       "v2_bytes": 711,
-      "v1_seconds": 0.4267,
-      "v2_seconds": 0.0399,
-      "v1_peak_bytes": 83247104,
-      "v2_peak_bytes": 11370496,
+      "v1_seconds": 0.3826,
+      "v2_seconds": 0.0304,
+      "v1_peak_bytes": 83226624,
+      "v2_peak_bytes": 11374592,
       "rmse_vs_v1": 0.0
     },
     {
@@ -74,10 +74,10 @@
       ],
       "v1_bytes": 2924,
       "v2_bytes": 2924,
-      "v1_seconds": 0.4051,
-      "v2_seconds": 0.0287,
-      "v1_peak_bytes": 83148800,
-      "v2_peak_bytes": 11374592,
+      "v1_seconds": 0.4062,
+      "v2_seconds": 0.0297,
+      "v1_peak_bytes": 83361792,
+      "v2_peak_bytes": 11378688,
       "rmse_vs_v1": 0.0
     },
     {
@@ -88,9 +88,9 @@
       ],
       "v1_bytes": 696,
       "v2_bytes": 696,
-      "v1_seconds": 0.3931,
-      "v2_seconds": 0.0297,
-      "v1_peak_bytes": 83402752,
+      "v1_seconds": 0.3735,
+      "v2_seconds": 0.0304,
+      "v1_peak_bytes": 83255296,
       "v2_peak_bytes": 11341824,
       "rmse_vs_v1": 0.0
     },
@@ -103,9 +103,9 @@
       "v1_bytes": 689,
       "v2_bytes": 689,
       "v1_seconds": 0.4062,
-      "v2_seconds": 0.0388,
-      "v1_peak_bytes": 82984960,
-      "v2_peak_bytes": 11345920,
+      "v2_seconds": 0.029,
+      "v1_peak_bytes": 83017728,
+      "v2_peak_bytes": 11350016,
       "rmse_vs_v1": 0.0
     },
     {
@@ -116,9 +116,9 @@
       ],
       "v1_bytes": 689,
       "v2_bytes": 689,
-      "v1_seconds": 0.4116,
-      "v2_seconds": 0.0297,
-      "v1_peak_bytes": 83623936,
+      "v1_seconds": 0.3953,
+      "v2_seconds": 0.0281,
+      "v1_peak_bytes": 83283968,
       "v2_peak_bytes": 11358208,
       "rmse_vs_v1": 0.0
     },
@@ -130,10 +130,10 @@
       ],
       "v1_bytes": 691,
       "v2_bytes": 691,
-      "v1_seconds": 0.3949,
-      "v2_seconds": 0.034,
-      "v1_peak_bytes": 83369984,
-      "v2_peak_bytes": 11350016,
+      "v1_seconds": 0.3952,
+      "v2_seconds": 0.0302,
+      "v1_peak_bytes": 83128320,
+      "v2_peak_bytes": 11341824,
       "rmse_vs_v1": 0.0
     },
     {
@@ -144,10 +144,10 @@
       ],
       "v1_bytes": 691,
       "v2_bytes": 691,
-      "v1_seconds": 0.3901,
-      "v2_seconds": 0.0427,
+      "v1_seconds": 0.4068,
+      "v2_seconds": 0.0272,
       "v1_peak_bytes": 83079168,
-      "v2_peak_bytes": 11354112,
+      "v2_peak_bytes": 11345920,
       "rmse_vs_v1": 0.0
     },
     {
@@ -158,10 +158,10 @@
       ],
       "v1_bytes": 887,
       "v2_bytes": 887,
-      "v1_seconds": 0.4676,
-      "v2_seconds": 0.0426,
-      "v1_peak_bytes": 83165184,
-      "v2_peak_bytes": 11358208,
+      "v1_seconds": 0.3944,
+      "v2_seconds": 0.0286,
+      "v1_peak_bytes": 83533824,
+      "v2_peak_bytes": 11382784,
       "rmse_vs_v1": 0.0
     },
     {
@@ -172,10 +172,10 @@
       ],
       "v1_bytes": 694,
       "v2_bytes": 694,
-      "v1_seconds": 0.4545,
-      "v2_seconds": 0.0513,
-      "v1_peak_bytes": 83095552,
-      "v2_peak_bytes": 11366400,
+      "v1_seconds": 0.3708,
+      "v2_seconds": 0.0337,
+      "v1_peak_bytes": 83206144,
+      "v2_peak_bytes": 11337728,
       "rmse_vs_v1": 0.0
     },
     {
@@ -186,15 +186,15 @@
       ],
       "v1_bytes": 152488,
       "v2_bytes": 152488,
-      "v1_seconds": 0.4293,
-      "v2_seconds": 0.0489,
-      "v1_peak_bytes": 84856832,
-      "v2_peak_bytes": 12701696,
+      "v1_seconds": 0.4098,
+      "v2_seconds": 0.0364,
+      "v1_peak_bytes": 84217856,
+      "v2_peak_bytes": 12693504,
       "rmse_vs_v1": 0.0
     }
   ],
-  "stress_seconds": 0.12080389994662255,
-  "stress_peak_bytes": 13344768,
+  "stress_seconds": 0.12367739994078875,
+  "stress_peak_bytes": 13348864,
   "os_version": "sys.getwindowsversion(major=10, minor=0, build=26300, platform=2, service_pack='')",
-  "exe_sha256": "acae0d900fba1b1fc18cc6107ce7b044bb5fd1f435061ac68d0ed5fa77276e6a"
+  "exe_sha256": "287c2c4245d921d14976d55967d2077aaf63f25d1b2d66dfef518d73b8c1fa64"
 }

@@ -1,5 +1,9 @@
+#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 #include <windows.h>
 #include <wincodec.h>
 #include <shellapi.h>
@@ -244,10 +248,10 @@ ConvertResult ConvertOne(
     const fs::path& originalInput)
 {
     ConvertResult result;
-    const fs::path input = NativePath(originalInput);
-    result.input = input;
+    result.input = originalInput;
 
     try {
+        const fs::path input = NativePath(originalInput);
         if (!HasPngExtension(input)) {
             result.error = L"Input is not a .png file.";
             return result;

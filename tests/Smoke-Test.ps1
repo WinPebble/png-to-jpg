@@ -153,7 +153,7 @@ try {
     }
 
     Write-Host ""
-    Write-Host "Gate 1 smoke tests PASSED."
+    Write-Host "Gate B smoke tests PASSED."
 }
 finally {
     Remove-Item -Path $root -Recurse -Force -ErrorAction SilentlyContinue
