@@ -115,7 +115,10 @@ try {
     $marker=Join-Path $state 'deployment-test.txt'
     $markerValue=[guid]::NewGuid().ToString('N')
     $markerValue | Set-Content -LiteralPath $marker
-    Add-AppxPackage -Path $update
+    # The preceding COM test may leave the package's surrogate running.
+    # Let Windows close only processes associated with this target package.
+    $result.UpdatePolicy='ForceTargetApplicationShutdown (target test package only)'
+    Add-AppxPackage -Path $update -ForceTargetApplicationShutdown
     $p=Assert-Installed '2.0.0.1'
     $result.UpdatedPackageFullName=$p.PackageFullName
     if ((Get-Content -LiteralPath $marker -Raw).Trim() -cne $markerValue) { throw 'Update did not preserve LocalState' }

@@ -61,6 +61,18 @@ hash checks). This direct preflight now runs before creating certificates or
 installing packages. Registered signed deployment still needs a fresh full run;
 direct DLL test success does not replace that checkpoint.
 
+The fourth run passed signed initial installation, installed binary hash checks
+and the complete registered COM workflow with Elevated=false. Update then failed
+with 0x80073D02 because the target package was still in use after COM testing;
+cleanup reported zero errors. The update now uses Add-AppxPackage's documented
+ForceTargetApplicationShutdown option to close processes associated with this
+test package. It does not use ForceApplicationShutdown (which also affects
+dependencies), kill arbitrary dllhost processes or restart Explorer. The report
+records this policy. Successful local forced update will not establish deferred
+Store update behavior; the full lifecycle remains pending a fresh run.
+
+Reference: [Add-AppxPackage target shutdown option](https://learn.microsoft.com/en-us/powershell/module/appx/add-appxpackage#-forcetargetapplicationshutdown).
+
 ```powershell
 Set-Location 'C:\Users\aries\Projects\WinPebble\png-to-jpg'
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-SignedDeployment.ps1
