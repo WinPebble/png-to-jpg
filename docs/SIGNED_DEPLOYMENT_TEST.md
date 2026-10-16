@@ -73,6 +73,25 @@ Store update behavior; the full lifecycle remains pending a fresh run.
 
 Reference: [Add-AppxPackage target shutdown option](https://learn.microsoft.com/en-us/powershell/module/appx/add-appxpackage#-forcetargetapplicationshutdown).
 
+## Verified full run — 2026-10-16
+
+Report: `artifacts/store/deployment-5a3be9310738485f835efaa83d3a12fc/report.json`.
+Runner source: `4f92174`; reviewed unsigned payload source: `5fe3935`.
+The user Administrator run has Passed=true, three completed lifecycle steps and
+zero cleanup errors. Both installed-version workers report Passed=true and
+Elevated=false. Install and update verify the exact reviewed CI EXE/DLL hashes;
+registered COM single/multi/Unicode/collision conversions and source hash checks
+pass. The LocalState marker survives the artificial 2.0.0.0 → 2.0.0.1 update.
+After uninstall, the unelevated probe reports REGDB_E_CLASSNOTREG (0x80040154).
+
+Independent post-run inspection confirmed no PNG to JPG test registration,
+no temporary TrustedPeople certificate or private key (thumbprint
+EF70258EFE20B77CB1CF444C99686B8F73442D92), and unchanged unsigned CI package
+SHA-256 `1b72f3f81d54eee32c04c812420de937f38dcbd0fd980e8f5de988efe244f6fc`.
+
+Local signed deployment checkpoint PASS. Local signed clones must never be
+submitted. This is not a v1 migration, Store-delivery or certification test.
+
 ```powershell
 Set-Location 'C:\Users\aries\Projects\WinPebble\png-to-jpg'
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-SignedDeployment.ps1

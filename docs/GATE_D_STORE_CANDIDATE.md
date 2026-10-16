@@ -1,6 +1,6 @@
 # Gate D — Store candidate preparation
 
-Status: candidate CI/build/package checks PASS. Fresh user WACK run on the shared-logo candidate has overall PASS, all required tests PASS and one documented optional process-launch FAIL. This gate is NOT complete: signed deployment validation remains outstanding and upload is NOT approved. See [WACK review](WACK_REVIEW_2026-10-16.md).
+Status: local technical candidate checkpoints PASS: CI/build/package, full WACK (all required tests PASS; one documented optional process-launch FAIL), and signed install/update/uninstall. Gate D remains open for final review, Store listing decisions and approved main-commit release artifacts. Upload is NOT approved. See [WACK review](WACK_REVIEW_2026-10-16.md) and [deployment evidence](SIGNED_DEPLOYMENT_TEST.md).
 
 ## Identity and source
 
@@ -40,11 +40,11 @@ The first automated WACK attempt was blocked by Windows requiring elevation. The
 
 `scripts/Test-Store-WACK.ps1` is prepared for an elevated PowerShell session on the existing Developer Mode test machine. It temporarily registers an official full layout, runs WACK by package full name, preserves the report and removes that registration in finally. It refuses to replace an installed official package. It does not sign/trust certificates, change Developer Mode, or modify legacy menus. A generated report must be reviewed test-by-test before declaring PASS.
 
-Signed MSIX install/update/uninstall validation, WACK review, any required fixes, user review and an authorized PR merge remain outstanding. Final submission artifacts must be rebuilt by successful CI from the exact approved main commit after merge. Branch CI artifacts are review candidates only. No upload, submission, certification request, merge or publishing has occurred.
+Local signed MSIX install/update/uninstall validation and WACK review are complete for the reviewed candidate. The artificial local update changes only package version and uses target-process shutdown; it does not establish Store-delivered updates or v1 migration. User review, listing completion and authorized PR merge remain outstanding. Final submission artifacts must be rebuilt by successful CI from the exact approved main commit after merge. Branch CI artifacts are review candidates only. No upload, submission, certification request, merge or publishing has occurred.
 
 The next checkpoint is prepared in [signed deployment instructions](SIGNED_DEPLOYMENT_TEST.md)
-and `scripts/Test-SignedDeployment.ps1`. Syntax and local update-clone repacking
-were checked; the signed lifecycle itself is pending an Administrator run. The
+and `scripts/Test-SignedDeployment.ps1`. The user's full Administrator lifecycle
+run on 2026-10-16 passed, with zero cleanup errors and all workers unelevated. The
 original unsigned WACK candidate remains unchanged. Draft Store listing and
 certification notes are in [submission draft](STORE_SUBMISSION_DRAFT.md); public
 URLs and commercial/listing choices remain to be supplied or approved.
