@@ -51,9 +51,22 @@ for the bundled converter launch described above. See WACK_REVIEW_2026-10-16.md.
 
 ## Items still to supply or approve
 
-- Public support and privacy-policy URLs for this product; do not infer them from
-  the WinPebble homepage or another product's listing.
-- Price/availability, markets, listing languages and category selection.
+- Price: **Free**, explicitly confirmed by the owner on 2026-10-16.
+- Proposed support URL: https://github.com/WinPebble/png-to-jpg/issues. GitHub API
+  confirmed this repository is public and Issues is enabled on 2026-10-16.
+- Privacy draft: [PRIVACY.md](../PRIVACY.md), adapted to this tool's actual PNG/JPG
+  behavior from PDF to Image and PDF Page Duplicator policies. Do not link another
+  tool's policy as if it covers this app. Intended main-branch URL after authorized
+  merge: https://github.com/WinPebble/png-to-jpg/blob/main/PRIVACY.md. That future
+  URL is not yet verified as available. PDF Duplicator's local preparation record
+  says its portal accepted policy text directly; recheck the PNG product's actual
+  form before relying on this alternative.
+- Proposed category: Utilities + tools; initial listing language: English (en-US).
+  These match PDF Duplicator's documented preparation. Vietnamese can be added
+  with separately reviewed translated listing text.
+- Proposed availability: public, all available markets, matching PDF Duplicator's
+  documented final audience/worldwide setting. This is a draft recommendation,
+  not authorization to make the product public or set automatic publication.
 - Age-rating questionnaire answers based on the final product.
 - Product screenshots from the final approved package, showing Explorer command,
   batch output and collision behavior with the shared WinPebble branding.
@@ -61,3 +74,11 @@ for the bundled converter launch described above. See WACK_REVIEW_2026-10-16.md.
 
 These are draft texts, not a completed submission. Final screenshots and package
 hashes must refer to the approved main-commit build after authorized merge.
+
+Reference evidence was read from sibling repositories on 2026-10-16:
+`pdf-to-image/PRIVACY.md`, `pdf-page-duplicator/docs/PRIVACY.md`,
+`pdf-page-duplicator/docs/STORE_PRIVATE_PREPARATION.md` (en-US, Utilities + tools,
+policy-text option) and `pdf-page-duplicator/docs/STORE_SUBMISSION_READY.md`
+(support tracker, free/worldwide/public). These are historical local records;
+their contents do not verify current live Partner Center settings or authorize
+copying another project's release approvals.
