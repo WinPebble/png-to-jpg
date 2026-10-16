@@ -1,6 +1,6 @@
 # Gate D — Store candidate preparation
 
-Status: candidate CI/build/package checks PASS. User WACK run completed with WARNING; DPI fix prepared and re-test pending. This gate is NOT complete and upload is NOT approved. See [WACK review](WACK_REVIEW_2026-10-16.md).
+Status: candidate CI/build/package checks PASS. Fresh user WACK run on the shared-logo candidate has overall PASS, all required tests PASS and one documented optional process-launch FAIL. This gate is NOT complete: signed deployment validation remains outstanding and upload is NOT approved. See [WACK review](WACK_REVIEW_2026-10-16.md).
 
 ## Identity and source
 
@@ -36,7 +36,7 @@ Target: Windows 11 x64, MinVersion 10.0.22000.0, actual local validation build 2
 
 ## WACK and release blockers
 
-The first automated WACK attempt was blocked by Windows requiring elevation. The user subsequently ran the prepared script as Administrator against the exact CI package. The completed report has overall WARNING: 22 PASS, one optional CreateProcessW FAIL and one required DPI-awareness WARNING. The DPI warning is fixed in source and compiled-manifest verification; a new WACK report on the revised CI package is required. No certificate trust was performed.
+The first automated WACK attempt was blocked by Windows requiring elevation. The first user report returned WARNING for DPI; the second retained the previous layout's finding. After embedding PerMonitorV2 and adding the documented WACK reset, the third full user run returned overall PASS: 23/24 tests PASS, all required tests PASS, including DPIAwarenessValidation. The remaining optional CreateProcessW FAIL concerns the shell DLL launching its bundled core and is documented in the WACK review. Tested source: `5fe39357385874ffb53e7fc9347b93b48f7ffead`; exact CI package SHA-256: `1b72f3f81d54eee32c04c812420de937f38dcbd0fd980e8f5de988efe244f6fc`. No certificate trust was performed. This is local WACK validation, not Microsoft Store certification.
 
 `scripts/Test-Store-WACK.ps1` is prepared for an elevated PowerShell session on the existing Developer Mode test machine. It temporarily registers an official full layout, runs WACK by package full name, preserves the report and removes that registration in finally. It refuses to replace an installed official package. It does not sign/trust certificates, change Developer Mode, or modify legacy menus. A generated report must be reviewed test-by-test before declaring PASS.
 
