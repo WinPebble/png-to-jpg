@@ -43,6 +43,15 @@ worker that rejects elevation, retains its transcript/result and tests registere
 COM. The probe now prints the activation HRESULT. A fresh lifecycle run is
 required; successful signing alone is not a deployment PASS.
 
+The second run's worker explicitly reported Elevated=true, proving that creating
+a new Shell.Application in the Administrator process did not obtain Explorer's
+token. The runner now obtains Application from the existing desktop view via
+ShellWindows.FindWindowSW (SWC_DESKTOP), as described in Microsoft's
+[Explorer delegation guidance](https://devblogs.microsoft.com/oldnewthing/20131118-00/?p=2643).
+An unelevated-worker preflight now runs before certificate creation or deployment.
+The second run also reported zero cleanup errors. The full elevated-to-unelevated
+lifecycle still requires the user's next Administrator run.
+
 ```powershell
 Set-Location 'C:\Users\aries\Projects\WinPebble\png-to-jpg'
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-SignedDeployment.ps1

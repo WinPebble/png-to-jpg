@@ -54,7 +54,13 @@ function Test-ExplorerContext([string]$Phase,[switch]$ExpectAbsent) {
     $command="& '"+$worker.Replace("'","''")+"' -Probe '"+$Probe.Replace("'","''")+"' -ResultPath '"+$workerResult.Replace("'","''")+"'"
     if ($ExpectAbsent) { $command+=' -ExpectAbsent' }
     $encoded=[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($command))
-    $shell=New-Object -ComObject Shell.Application
+    # A freshly created Shell.Application can live in this elevated process.
+    # Get Application through the existing desktop view hosted by Explorer.
+    $windows=(New-Object -ComObject Shell.Application).Windows()
+    $desktopHandle=0
+    $desktop=$windows.FindWindowSW(0,0,8,[ref]$desktopHandle,1)
+    if (!$desktop) { throw 'Interactive Explorer desktop broker unavailable' }
+    $shell=$desktop.Document.Application
     $shell.ShellExecute((Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'),('-NoProfile -ExecutionPolicy Bypass -EncodedCommand '+$encoded),$root,'open',0)
     $deadline=(Get-Date).AddSeconds(90)
     while (!(Test-Path -LiteralPath $workerResult) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 200 }
@@ -72,6 +78,8 @@ function Assert-Installed([string]$Version) {
     return $p
 }
 try {
+    # Reject a bad broker/token before creating certificates or installing anything.
+    Test-ExplorerContext 'preflight' -ExpectAbsent
     # Non-exportable temporary leaf key. Never export a PFX or add a root CA.
     $cert=New-SelfSignedCertificate -Type Custom -Subject $official.Publisher -KeyUsage DigitalSignature -KeyAlgorithm RSA -KeyLength 2048 -HashAlgorithm SHA256 -KeyExportPolicy NonExportable -CertStoreLocation 'Cert:\CurrentUser\My' -NotAfter (Get-Date).AddDays(2) -FriendlyName 'WinPebble PNG to JPG temporary deployment test' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3','2.5.29.19={text}')
     $result.CertificateThumbprint=$cert.Thumbprint
