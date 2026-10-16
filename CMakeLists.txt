@@ -9,6 +9,7 @@ project(
 )
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+option(WINPEBBLE_STORE_CANDIDATE "Build unreleased Store candidate metadata" OFF)
 
 add_executable(
     WinPebble.PNGToJPG
@@ -61,6 +62,10 @@ add_library(WinPebble.PNGToJPG.Shell SHARED shell/ExplorerCommand.cpp shell/Expl
 target_compile_features(WinPebble.PNGToJPG.Shell PRIVATE cxx_std_20)
 target_compile_definitions(WinPebble.PNGToJPG.Shell PRIVATE UNICODE _UNICODE)
 target_link_libraries(WinPebble.PNGToJPG.Shell PRIVATE shell32 shlwapi ole32 user32)
+if(WINPEBBLE_STORE_CANDIDATE)
+    target_compile_definitions(WinPebble.PNGToJPG PRIVATE WINPEBBLE_STORE_CANDIDATE)
+    target_compile_definitions(WinPebble.PNGToJPG.Shell PRIVATE WINPEBBLE_STORE_CANDIDATE)
+endif()
 add_executable(Shell-Probe tests/Shell-Probe.cpp)
 target_compile_features(Shell-Probe PRIVATE cxx_std_20)
 target_compile_definitions(Shell-Probe PRIVATE UNICODE _UNICODE)

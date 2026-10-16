@@ -435,7 +435,7 @@ int WINAPI wWinMain(
                 L"WinPebble PNG to JPG",
                 MB_OK | MB_ICONINFORMATION);
         }
-        return 2;
+        return quiet ? 2 : 0;
     }
 
     HRESULT hr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);

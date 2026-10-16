@@ -1,0 +1,47 @@
+name: PNG to JPG v2 - Store MSIX candidate
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: ['v2/**']
+permissions:
+  contents: read
+jobs:
+  store-candidate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure isolated Store candidate metadata
+        run: cmake -S . -B build/store -A x64 -DWINPEBBLE_STORE_CANDIDATE=ON
+      - name: Build core, shell and probe
+        run: cmake --build build/store --config Release --parallel
+      - name: Verify candidate binaries and shell launch
+        shell: pwsh
+        run: |
+          ./tests/Verify-Binary.ps1 -ExePath build/store/Release/WinPebble.PNGToJPG.exe -StoreCandidate
+          ./tests/Verify-Binary.ps1 -ExePath build/store/Release/WinPebble.PNGToJPG.Shell.dll -StoreCandidate
+          ./tests/Smoke-Test.ps1 -ExePath "$PWD/build/store/Release/WinPebble.PNGToJPG.exe"
+          ./tests/Shell-Test.ps1 -Probe build/store/Release/Shell-Probe.exe -Dll build/store/Release/WinPebble.PNGToJPG.Shell.dll
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test-only dependency
+        run: python -m pip install Pillow==11.3.0
+      - name: Candidate core hardening and v1 parity
+        run: python tests/gate_b.py --exe build/store/Release/WinPebble.PNGToJPG.exe
+      - name: Full unsigned Store candidate and verification
+        shell: pwsh
+        run: |
+          ./scripts/Build-Store-MSIX.ps1
+          python tests/verify_dev_package.py artifacts/store/WinPebble-PNG-to-JPG-2.0.0.0-Store-candidate.msix --store
+          Get-ChildItem .work -Recurse -Filter report.json | Copy-Item -Destination artifacts/store/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WinPebble-PNG-to-JPG-Store-candidate-win-x64
+          path: |
+            artifacts/store/*.msix
+            artifacts/store/*.txt
+            artifacts/store/*.json
+            artifacts/store/AppxManifest.Store.xml
+          if-no-files-found: error

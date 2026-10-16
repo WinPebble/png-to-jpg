@@ -1,10 +1,11 @@
 #include <windows.h>
+#include "build-version.h"
 
 101 ICON "branding/WinPebble.ico"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,1
- PRODUCTVERSION 2,0,0,1
+ FILEVERSION WP_NUMERIC_VERSION
+ PRODUCTVERSION WP_NUMERIC_VERSION
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS VS_FF_DEBUG
@@ -21,12 +22,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName",      "WinPebble\0"
             VALUE "FileDescription",  "WinPebble PNG to JPG\0"
-            VALUE "FileVersion",      "2.0.0.1\0"
+            VALUE "FileVersion",      WP_FILE_VERSION
             VALUE "InternalName",     "WinPebble.PNGToJPG.exe\0"
             VALUE "LegalCopyright",   "Copyright (c) 2026 WinPebble\0"
             VALUE "OriginalFilename", "WinPebble.PNGToJPG.exe\0"
             VALUE "ProductName",      "WinPebble PNG to JPG\0"
-            VALUE "ProductVersion",   "2.0.0-dev.1\0"
+            VALUE "ProductVersion",   WP_PRODUCT_VERSION
         END
     END
 

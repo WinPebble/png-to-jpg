@@ -1,7 +1,8 @@
 #include <windows.h>
+#include "../resources/build-version.h"
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,1
- PRODUCTVERSION 2,0,0,1
+ FILEVERSION WP_NUMERIC_VERSION
+ PRODUCTVERSION WP_NUMERIC_VERSION
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0
  FILEOS VOS__WINDOWS32
@@ -13,9 +14,9 @@ BEGIN
   BEGIN
    VALUE "CompanyName", "WinPebble\0"
    VALUE "FileDescription", "WinPebble PNG to JPG Explorer command\0"
-   VALUE "FileVersion", "2.0.0.1\0"
+   VALUE "FileVersion", WP_FILE_VERSION
    VALUE "ProductName", "WinPebble PNG to JPG\0"
-   VALUE "ProductVersion", "2.0.0-dev.1\0"
+   VALUE "ProductVersion", WP_PRODUCT_VERSION
    VALUE "OriginalFilename", "WinPebble.PNGToJPG.Shell.dll\0"
   END
  END
