@@ -46,7 +46,10 @@ try {
     @{ ExitCode=$exitCode; Report=$xmlReport; Package=$registered.PackageFullName; SourcePackageSHA256=$hash; Mode='registered full layout; no certificate' } |
         ConvertTo-Json | Set-Content (Join-Path $reports 'invocation.json')
     if ($exitCode -ne 0 -or !(Test-Path -LiteralPath $xmlReport)) { throw 'WACK did not complete successfully; inspect its log and invocation.json. This is not a PASS.' }
-    Write-Host "WACK report: $xmlReport. Review every test result; report generation alone is not a PASS."
+    $summary=& (Join-Path $PSScriptRoot 'Read-WACKReport.ps1') -Report $xmlReport -OutputPath ([IO.Path]::ChangeExtension($xmlReport,'summary.json'))
+    Write-Host "WACK overall: $($summary.OverallResult); $($summary.Passed)/$($summary.TestCount) tests PASS."
+    Write-Host "Required non-PASS: $($summary.RequiredNonPass.Count); optional non-PASS: $($summary.OptionalNonPass.Count)."
+    Write-Host "WACK report: $xmlReport. Review optional findings and required results before release."
 } finally {
     if ($ownsRegistration) {
         $cleanup=Get-AppxPackage -Name $official.Name

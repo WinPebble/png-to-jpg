@@ -1,6 +1,6 @@
 # Gate D — Store candidate preparation
 
-Status: official identity supplied; local candidate build, manifest/payload validation and core/shell checks PASS. WACK pending Administrator execution. This gate is NOT complete and upload is NOT approved.
+Status: candidate CI/build/package checks PASS. User WACK run completed with WARNING; DPI fix prepared and re-test pending. This gate is NOT complete and upload is NOT approved. See [WACK review](WACK_REVIEW_2026-10-16.md).
 
 ## Identity and source
 
@@ -36,7 +36,7 @@ Target: Windows 11 x64, MinVersion 10.0.22000.0, actual local validation build 2
 
 ## WACK and release blockers
 
-An actual WACK attempt on the unsigned local candidate was blocked by Windows: **The requested operation requires elevation**. No XML report was created. This is an environment prerequisite failure, not a completed certification test. No Administrator elevation or certificate trust was silently performed.
+The first automated WACK attempt was blocked by Windows requiring elevation. The user subsequently ran the prepared script as Administrator against the exact CI package. The completed report has overall WARNING: 22 PASS, one optional CreateProcessW FAIL and one required DPI-awareness WARNING. The DPI warning is fixed in source and compiled-manifest verification; a new WACK report on the revised CI package is required. No certificate trust was performed.
 
 `scripts/Test-Store-WACK.ps1` is prepared for an elevated PowerShell session on the existing Developer Mode test machine. It temporarily registers an official full layout, runs WACK by package full name, preserves the report and removes that registration in finally. It refuses to replace an installed official package. It does not sign/trust certificates, change Developer Mode, or modify legacy menus. A generated report must be reviewed test-by-test before declaring PASS.
 

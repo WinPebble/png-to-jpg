@@ -13,7 +13,7 @@ $build = @"
 @if errorlevel 1 exit /b 1
 @rc /nologo $resourceDefine /fo "$output\version.res" resources\version.rc
 @if errorlevel 1 exit /b 1
-@cl /nologo /std:c++20 /O2 /MT /W4 /WX /permissive- /EHsc /utf-8 /DUNICODE /D_UNICODE native\WinPebble.PNGToJPG.cpp /Fo:"$output\core.obj" /Fe:"$output\WinPebble.PNGToJPG.exe" /link /SUBSYSTEM:WINDOWS /MACHINE:X64 "$output\version.res" windowscodecs.lib ole32.lib oleaut32.lib shell32.lib shlwapi.lib user32.lib
+@cl /nologo /std:c++20 /O2 /MT /W4 /WX /permissive- /EHsc /utf-8 /DUNICODE /D_UNICODE native\WinPebble.PNGToJPG.cpp /Fo:"$output\core.obj" /Fe:"$output\WinPebble.PNGToJPG.exe" /link /MANIFEST:NO /SUBSYSTEM:WINDOWS /MACHINE:X64 "$output\version.res" windowscodecs.lib ole32.lib oleaut32.lib shell32.lib shlwapi.lib user32.lib
 @exit /b %errorlevel%
 "@
 [IO.File]::WriteAllText((Join-Path $output 'compile.cmd'), $build, [Text.Encoding]::ASCII)

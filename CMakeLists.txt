@@ -31,6 +31,8 @@ target_compile_definitions(
 )
 
 if(MSVC)
+    # The reviewed manifest is embedded by version.rc as resource #1.
+    target_link_options(WinPebble.PNGToJPG PRIVATE /MANIFEST:NO)
     target_compile_options(
         WinPebble.PNGToJPG
         PRIVATE

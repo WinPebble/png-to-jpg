@@ -2,6 +2,7 @@
 #include "build-version.h"
 
 101 ICON "branding/WinPebble.ico"
+1 RT_MANIFEST "resources/app.manifest"
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION WP_NUMERIC_VERSION
