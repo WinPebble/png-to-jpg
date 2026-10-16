@@ -18,4 +18,17 @@ The report marks this test OPTIONAL=TRUE. Microsoft's [Desktop Bridge test guida
 
 ## Next validation
 
+The second user run tested post-fix CI package SHA-256
+`a55d2297532f0dc8f42f77fb4bc2c960b6c94978289dc578fb7a991fac809ec8`.
+It still reports 22 PASS, required DPI WARNING and optional CreateProcessW FAIL.
+Inventory EXE/DLL hashes match the revised package, but the DPI message points
+to the previous run's `layout-9665094f9329438bb78e15d96d27086d`, whereas the
+new inventory root is `layout-ec7dcbd5d86d4159985b65efb489a89b`. This is evidence
+of a retained finding, not proof that the revised manifest is absent. The script
+previously omitted `appcert.exe reset`; it now follows Microsoft's documented
+reset/test sequence and records the layout and reset in invocation evidence.
+Do not declare DPI PASS until a fresh report confirms it. Shared logo sizes and
+scale were also aligned byte-for-byte with PDF Page Duplicator in this revision;
+re-test the newly built package after both changes.
+
 Re-run WACK on the exact post-fix CI package, verify that DPIAwarenessValidation becomes PASS, and review every required result. The optional process-launch finding may remain and must be reported accurately. Signed deployment and final main-commit release gates remain outstanding; no merge, upload or publication is authorized.

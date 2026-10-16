@@ -35,6 +35,10 @@ $xmlReport=Join-Path $reports ('wack-'+[guid]::NewGuid().ToString('N')+'.xml')
 $registered=$null
 $ownsRegistration=$false
 try {
+    # WACK can retain per-test findings across identical package identities.
+    # Follow Microsoft's documented CLI sequence so this run starts fresh.
+    & $wack reset
+    if ($LASTEXITCODE -ne 0) { throw 'WACK reset failed; refusing a potentially cached test run' }
     # Registered full payload avoids signing or trusting the unsigned Store candidate.
     Add-AppxPackage -Register (Join-Path $Layout 'AppxManifest.xml')
     $ownsRegistration=$true
@@ -43,7 +47,7 @@ try {
     & $wack test -packagefullname $registered.PackageFullName -reportoutputpath $xmlReport
     $exitCode=$LASTEXITCODE
     $hash=if ($PackagePath) { (Get-FileHash -LiteralPath $PackagePath).Hash.ToLower() } else { $null }
-    @{ ExitCode=$exitCode; Report=$xmlReport; Package=$registered.PackageFullName; SourcePackageSHA256=$hash; Mode='registered full layout; no certificate' } |
+    @{ ExitCode=$exitCode; Report=$xmlReport; Layout=$Layout; ResetBeforeTest=$true; Package=$registered.PackageFullName; SourcePackageSHA256=$hash; Mode='registered full layout; no certificate' } |
         ConvertTo-Json | Set-Content (Join-Path $reports 'invocation.json')
     if ($exitCode -ne 0 -or !(Test-Path -LiteralPath $xmlReport)) { throw 'WACK did not complete successfully; inspect its log and invocation.json. This is not a PASS.' }
     $summary=& (Join-Path $PSScriptRoot 'Read-WACKReport.ps1') -Report $xmlReport -OutputPath ([IO.Path]::ChangeExtension($xmlReport,'summary.json'))
