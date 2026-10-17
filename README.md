@@ -129,3 +129,13 @@ https://winpebble.com
 ---
 
 No ads inside the app. No tracking. No account required.
+
+## v2 development — Gates A/B/C
+
+The public release remains v1.0.0. The `v2/store-modernization` branch contains an unreleased native x64 WIC core (`2.0.0-dev.1`). Historical v1 files under src/ are preserved.
+
+See [discovery](docs/GATE_A_DISCOVERY.md), [core validation](docs/GATE_B_VALIDATION.md) and [Explorer validation](docs/GATE_C_VALIDATION.md) for evidence, build commands and limitations. User quality approval was received on 2026-10-16. Native Explorer integration and an unsigned full development MSIX are now available for testing. No merge or Store publication is authorized.
+
+The v2 development executable, Explorer command and package use the [shared WinPebble brand icon](branding/SHARED_BRAND_ICON.md), as requested on 2026-10-16.
+
+The user supplied PNG-to-JPG Partner Center identity on 2026-10-16. The [Store candidate lane](docs/GATE_D_STORE_CANDIDATE.md) uses a separate official manifest and CI workflow. WACK review, final release approval and an approved main-commit build are required before upload; the Store product is still a draft.

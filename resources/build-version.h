@@ -1,0 +1,9 @@
+#ifdef WINPEBBLE_STORE_CANDIDATE
+#define WP_NUMERIC_VERSION 2,0,0,0
+#define WP_FILE_VERSION "2.0.0.0\0"
+#define WP_PRODUCT_VERSION "2.0.0-rc.1\0"
+#else
+#define WP_NUMERIC_VERSION 2,0,0,1
+#define WP_FILE_VERSION "2.0.0.1\0"
+#define WP_PRODUCT_VERSION "2.0.0-dev.1\0"
+#endif

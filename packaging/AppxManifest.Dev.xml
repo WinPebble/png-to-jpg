@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+ xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+ xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
+ xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+ xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4"
+ xmlns:desktop5="http://schemas.microsoft.com/appx/manifest/desktop/windows10/5"
+ xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+ IgnorableNamespaces="uap uap10 com desktop4 desktop5 rescap">
+ <!-- DEVELOPMENT ONLY. Official identity is isolated in AppxManifest.Store.xml. -->
+ <Identity Name="WinPebble.PNGToJPG.Dev" Publisher="CN=WinPebble PNG to JPG Development"
+   Version="2.0.0.1" ProcessorArchitecture="x64" />
+ <Properties>
+  <DisplayName>WinPebble PNG to JPG (Development)</DisplayName>
+  <PublisherDisplayName>WinPebble</PublisherDisplayName>
+  <Description>Convert PNG images to JPG from File Explorer.</Description>
+  <Logo>Assets\StoreLogo.png</Logo>
+ </Properties>
+ <Resources><Resource Language="en-us" /></Resources>
+ <Dependencies>
+  <!-- Windows 11 development target; not a claim of testing every build. -->
+  <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26300.0" />
+ </Dependencies>
+ <Applications>
+  <Application Id="PNGToJPG" Executable="WinPebble.PNGToJPG.exe"
+   uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL">
+   <uap:VisualElements DisplayName="WinPebble PNG to JPG (Development)"
+    Description="Convert PNG images to JPG from File Explorer."
+    BackgroundColor="transparent" Square44x44Logo="Assets\Square44x44Logo.png"
+    Square150x150Logo="Assets\Square150x150Logo.png" />
+   <Extensions>
+    <com:Extension Category="windows.comServer"><com:ComServer>
+     <com:SurrogateServer DisplayName="WinPebble PNG to JPG command">
+      <com:Class Id="331934D2-2EAD-4A03-8FF9-FEFF310D45BB"
+       Path="WinPebble.PNGToJPG.Shell.dll" ThreadingModel="STA" />
+     </com:SurrogateServer>
+    </com:ComServer></com:Extension>
+    <desktop4:Extension Category="windows.fileExplorerContextMenus">
+     <desktop4:FileExplorerContextMenus><desktop5:ItemType Type=".png">
+      <desktop5:Verb Id="WinPebbleConvertPngToJpg" Clsid="331934D2-2EAD-4A03-8FF9-FEFF310D45BB" />
+     </desktop5:ItemType></desktop4:FileExplorerContextMenus>
+    </desktop4:Extension>
+   </Extensions>
+  </Application>
+ </Applications>
+ <Capabilities><rescap:Capability Name="runFullTrust" /></Capabilities>
+</Package>

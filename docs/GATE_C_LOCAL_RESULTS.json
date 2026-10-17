@@ -1,0 +1,18 @@
+{
+  "os": "Windows 11 x64 build 26300",
+  "ui_tests": [
+    "modern menu displays one Convert PNG to JPG with icon",
+    "single PNG creates alpha sample.jpg",
+    "two PNG selection creates alpha sample (2).jpg and Unicode JPG",
+    "TXT modern menu does not show command",
+    "after unregister PNG modern menu no longer shows command"
+  ],
+  "source_hashes": {
+    "alpha sample.png": "d74333f8a76eb1ae5a9530b37ab0ff4bc4cd215c889c13ac0fac5f6866c5ed68",
+    "\u1ea3nh ti\u1ebfng Vi\u1ec7t.png": "82e15e9ef26cc32c46f43382d53bf5bf275743fb052ae1f6c8f36b0ae0fa882c"
+  },
+  "uninstall": "package removed, registered full layout files deleted, user images retained, v1 LegacyDisable removed, exact classic override restored",
+  "certificate_changes": "none",
+  "windows_10": "not tested",
+  "deployment": "full layout development registration; unsigned full MSIX schema/payload build; signed MSIX installation not tested"
+}
