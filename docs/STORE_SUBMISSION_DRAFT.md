@@ -2,6 +2,12 @@
 
 Local preparation only. No Partner Center changes, upload or publication.
 
+Owner asked to continue on 2026-10-17 after reviewing the proposed settings.
+Prepare the listing as free, Utilities + tools, en-US, all available markets,
+with this repository's Issues support URL and the app-specific privacy draft.
+These are preparation settings; merge, upload, certification submission and
+publication still require separate confirmation. No automatic release is set.
+
 ## English listing text
 
 Short description:
