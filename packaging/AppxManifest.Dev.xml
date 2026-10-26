@@ -9,7 +9,7 @@
  IgnorableNamespaces="uap uap10 com desktop4 desktop5 rescap">
  <!-- DEVELOPMENT ONLY. Official identity is isolated in AppxManifest.Store.xml. -->
  <Identity Name="WinPebble.PNGToJPG.Dev" Publisher="CN=WinPebble PNG to JPG Development"
-   Version="2.0.0.1" ProcessorArchitecture="x64" />
+   Version="2.0.1.1" ProcessorArchitecture="x64" />
  <Properties>
   <DisplayName>WinPebble PNG to JPG (Development)</DisplayName>
   <PublisherDisplayName>WinPebble</PublisherDisplayName>
@@ -18,8 +18,8 @@
  </Properties>
  <Resources><Resource Language="en-us" /></Resources>
  <Dependencies>
-  <!-- Windows 11 development target; not a claim of testing every build. -->
-  <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26300.0" />
+  <!-- Windows 10 version 2004+ and Windows 11 development target; not a claim of testing every build. -->
+  <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26300.0" />
  </Dependencies>
  <Applications>
   <Application Id="PNGToJPG" Executable="WinPebble.PNGToJPG.exe"

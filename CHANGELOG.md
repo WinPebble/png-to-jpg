@@ -4,6 +4,21 @@ All notable changes to WinPebble PNG to JPG will be documented in this file.
 
 The project uses semantic versioning.
 
+## [2.0.1] - Unreleased
+
+- Lower full MSIX installation minimum from Windows 11 build 22000 to Windows
+  10 version 2004 (build 19041), x64; retain the native packaged Explorer command.
+- Bump the Store package to 2.0.1.0 and development package to 2.0.1.1 so the
+  published 2.0.0.0 package can be updated without changing its identity.
+- The owner waived additional Windows 10 runtime/lifecycle testing on 2026-10-26
+  to expedite submission. Manifest validation is not Windows 10 runtime evidence.
+
+## [2.0.0] - Microsoft Store
+
+- Native x64 converter and full MSIX with a PNG-only Explorer command.
+- Shared WinPebble branding. Windows 11 minimum (build 22000).
+- Store availability verified on 2026-10-20; historical v1 ZIP remains intact.
+
 ## [1.0.0] - 2026-09-24
 
 Initial public release.

@@ -34,7 +34,7 @@ jobs:
         shell: pwsh
         run: |
           ./scripts/Build-Store-MSIX.ps1
-          python tests/verify_dev_package.py artifacts/store/WinPebble-PNG-to-JPG-2.0.0.0-Store-candidate.msix --store
+          python tests/verify_dev_package.py artifacts/store/WinPebble-PNG-to-JPG-2.0.1.0-Store-candidate.msix --store
           Get-ChildItem .work -Recurse -Filter report.json | Copy-Item -Destination artifacts/store/
       - uses: actions/upload-artifact@v4
         with:

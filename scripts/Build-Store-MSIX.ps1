@@ -7,7 +7,8 @@ $source=Join-Path $root 'packaging/AppxManifest.Store.xml'
 foreach ($field in 'Name','Publisher') {
     if ($manifest.Package.Identity.GetAttribute($field) -cne $official.$field) { throw "Official identity mismatch: $field" }
 }
-if ($manifest.Package.Identity.Version -cne '2.0.0.0' -or $manifest.Package.Identity.ProcessorArchitecture -cne 'x64') { throw 'Wrong Store version/architecture' }
+if ($manifest.Package.Identity.Version -cne '2.0.1.0' -or $manifest.Package.Identity.ProcessorArchitecture -cne 'x64') { throw 'Wrong Store version/architecture' }
+if ($manifest.Package.Dependencies.TargetDeviceFamily.Name -cne 'Windows.Desktop' -or $manifest.Package.Dependencies.TargetDeviceFamily.MinVersion -cne '10.0.19041.0') { throw 'Expected Windows Desktop 2004+ compatibility floor' }
 if ($manifest.Package.Properties.PublisherDisplayName -cne $official.PublisherDisplayName) { throw 'Official PublisherDisplayName mismatch' }
 foreach ($name in 'WinPebble.PNGToJPG.exe','WinPebble.PNGToJPG.Shell.dll') {
     $binary=Join-Path $BinaryDirectory $name
@@ -29,7 +30,7 @@ $sdk=Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" -Directory |
     Where-Object { Test-Path (Join-Path $_.FullName 'x64/makeappx.exe') } |
     Sort-Object Name -Descending | Select-Object -First 1
 if (!$sdk) { throw 'Windows SDK MakeAppx not found' }
-$msix=Join-Path $output 'WinPebble-PNG-to-JPG-2.0.0.0-Store-candidate.msix'
+$msix=Join-Path $output 'WinPebble-PNG-to-JPG-2.0.1.0-Store-candidate.msix'
 & (Join-Path $sdk.FullName 'x64/makeappx.exe') pack /d $stage /p $msix /o
 if ($LASTEXITCODE) { throw 'Store MakeAppx validation/packing failed' }
 # No SignTool, certificate generation/trust or Partner Center write in this lane.

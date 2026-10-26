@@ -4,6 +4,19 @@ A lightweight Windows utility that converts PNG images to JPG directly from File
 
 **WinPebble — Small Windows tools. Simple fixes.**
 
+## Microsoft Store version
+
+[Get WinPebble PNG to JPG](https://apps.microsoft.com/detail/9NZC26K97WTT).
+The published Store version 2.0.0.0 requires Windows 11 x64.
+
+Version **2.0.1** is an unreleased compatibility update targeting Windows 10
+version 2004 (build 19041) or later and Windows 11, x64. The owner waived further
+Windows 10 runtime testing for this update; see the
+[compatibility checklist](docs/WINDOWS_10_COMPATIBILITY.md).
+
+The ZIP download, PowerShell implementation and installation instructions below
+describe the historical **v1.0.0** release. They do not install the Store version.
+
 ## Download
 
 Download the latest release:
@@ -130,12 +143,14 @@ https://winpebble.com
 
 No ads inside the app. No tracking. No account required.
 
-## v2 development — Gates A/B/C
+## v2 native development
 
-The public release remains v1.0.0. The `v2/store-modernization` branch contains an unreleased native x64 WIC core (`2.0.0-dev.1`). Historical v1 files under src/ are preserved.
+Store version 2.0.0.0 is live; version 2.0.1 is a Windows 10 compatibility
+candidate, not released. The native x64 WIC core and packaged Explorer command
+use the [shared WinPebble brand icon](branding/SHARED_BRAND_ICON.md).
 
-See [discovery](docs/GATE_A_DISCOVERY.md), [core validation](docs/GATE_B_VALIDATION.md) and [Explorer validation](docs/GATE_C_VALIDATION.md) for evidence, build commands and limitations. User quality approval was received on 2026-10-16. Native Explorer integration and an unsigned full development MSIX are now available for testing. No merge or Store publication is authorized.
-
-The v2 development executable, Explorer command and package use the [shared WinPebble brand icon](branding/SHARED_BRAND_ICON.md), as requested on 2026-10-16.
-
-The user supplied PNG-to-JPG Partner Center identity on 2026-10-16. The [Store candidate lane](docs/GATE_D_STORE_CANDIDATE.md) uses a separate official manifest and CI workflow. WACK review, final release approval and an approved main-commit build are required before upload; the Store product is still a draft.
+Historical [Gate A](docs/GATE_A_DISCOVERY.md), [Gate B](docs/GATE_B_VALIDATION.md),
+[Gate C](docs/GATE_C_VALIDATION.md) and [Gate D](docs/GATE_D_STORE_CANDIDATE.md)
+records describe the original 2.0.0 candidate. They are not validation evidence
+for the new update. See [Windows 10 validation](docs/WINDOWS_10_COMPATIBILITY.md)
+for remaining release gates. Historical v1 files under src/ are preserved.

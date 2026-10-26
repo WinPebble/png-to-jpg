@@ -7,9 +7,9 @@
  xmlns:desktop5="http://schemas.microsoft.com/appx/manifest/desktop/windows10/5"
  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
  IgnorableNamespaces="uap uap10 com desktop4 desktop5 rescap">
- <!-- STORE CANDIDATE ONLY. Not released; identity supplied by the user in Partner Center. -->
+ <!-- UPDATE CANDIDATE ONLY. 2.0.0.0 is live; 2.0.1.0 is not released. -->
  <Identity Name="TrungHieuNguyen-WinPebble.WinPebblePNGtoJPG" Publisher="CN=6BD09250-A4F3-4F78-9DA7-2D9751735950"
-   Version="2.0.0.0" ProcessorArchitecture="x64" />
+   Version="2.0.1.0" ProcessorArchitecture="x64" />
  <Properties>
   <DisplayName>WinPebble PNG to JPG</DisplayName>
   <PublisherDisplayName>Trung Hieu Nguyen - WinPebble</PublisherDisplayName>
@@ -18,8 +18,8 @@
  </Properties>
  <Resources><Resource Language="en-us" /></Resources>
  <Dependencies>
-  <!-- Windows 11 Store candidate target; not a claim of testing every build. -->
-  <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.26300.0" />
+  <!-- Windows 10 version 2004+ and Windows 11 Store candidate target; not a claim of testing every build. -->
+  <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26300.0" />
  </Dependencies>
  <Applications>
   <Application Id="PNGToJPG" Executable="WinPebble.PNGToJPG.exe"
