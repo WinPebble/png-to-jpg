@@ -38,7 +38,7 @@ jobs:
         shell: pwsh
         run: |
           ./scripts/Build-Dev-MSIX.ps1
-          python tests/verify_dev_package.py artifacts/gate-c/WinPebble-PNG-to-JPG-2.0.0-dev.1-unsigned.msix
+          python tests/verify_dev_package.py artifacts/gate-c/WinPebble-PNG-to-JPG-2.0.1-dev.1-unsigned.msix
       - name: Collect development evidence
         shell: pwsh
         run: |

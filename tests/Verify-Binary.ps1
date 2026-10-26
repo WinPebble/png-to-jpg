@@ -1,8 +1,8 @@
 param([string]$ExePath = 'build/Release/WinPebble.PNGToJPG.exe',[switch]$StoreCandidate)
 $ErrorActionPreference='Stop'
 $v=(Get-Item -LiteralPath $ExePath).VersionInfo
-$productVersion=if ($StoreCandidate) { '2.0.0-rc.1' } else { '2.0.0-dev.1' }
-$fileVersion=if ($StoreCandidate) { '2.0.0.0' } else { '2.0.0.1' }
+$productVersion=if ($StoreCandidate) { '2.0.1-rc.1' } else { '2.0.1-dev.1' }
+$fileVersion=if ($StoreCandidate) { '2.0.1.0' } else { '2.0.1.1' }
 if ($v.ProductName -ne 'WinPebble PNG to JPG' -or $v.ProductVersion -ne $productVersion -or $v.FileVersion -ne $fileVersion) { throw 'Unexpected binary metadata' }
 $bytes=[IO.File]::ReadAllBytes((Resolve-Path $ExePath))
 $pe=[BitConverter]::ToInt32($bytes,0x3c)

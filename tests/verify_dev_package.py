@@ -25,7 +25,7 @@ with zipfile.ZipFile(sys.argv[1]) as archive:
     identity = root.find('f:Identity', ns)
     expected_identity = {
         'Name': 'WinPebble.PNGToJPG.Dev', 'Publisher': 'CN=WinPebble PNG to JPG Development',
-        'Version': '2.0.0.1', 'ProcessorArchitecture': 'x64',
+        'Version': '2.0.1.1', 'ProcessorArchitecture': 'x64',
     }
     store = '--store' in sys.argv[2:]
     if store:
@@ -41,7 +41,12 @@ with zipfile.ZipFile(sys.argv[1]) as archive:
         for name in ['Command.ico', 'StoreLogo.png', 'Square44x44Logo.png', 'Square150x150Logo.png']:
             assert archive.read('Assets/' + name) == (Path(__file__).resolve().parents[1] / 'packaging/Assets' / name).read_bytes()
     assert identity.attrib == expected_identity
-    assert root.find('.//f:TargetDeviceFamily', ns).get('MinVersion') == '10.0.22000.0'
+    assert root.find('.//f:TargetDeviceFamily', ns).get('MinVersion') == '10.0.19041.0'
+    assert root.find('.//f:TargetDeviceFamily', ns).get('Name') == 'Windows.Desktop'
+    application = root.find('.//f:Application', ns)
+    uap10 = '{http://schemas.microsoft.com/appx/manifest/uap/windows10/10}'
+    assert application.get(uap10 + 'RuntimeBehavior') == 'packagedClassicApp'
+    assert application.get(uap10 + 'TrustLevel') == 'mediumIL'
     assert root.find('.//f:Application', ns).get('Executable') == 'WinPebble.PNGToJPG.exe'
     classes = root.findall('.//com:Class', ns)
     assert len(classes) == 1 and classes[0].get('Path') == 'WinPebble.PNGToJPG.Shell.dll'

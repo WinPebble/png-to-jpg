@@ -1,8 +1,8 @@
 #requires -Version 5.1
 [CmdletBinding()]
 param(
-    [string]$PackagePath='artifacts/store/ci-brand/WinPebble-PNG-to-JPG-2.0.0.0-Store-candidate.msix',
-    [string]$ExpectedSHA256='1b72f3f81d54eee32c04c812420de937f38dcbd0fd980e8f5de988efe244f6fc',
+    [Parameter(Mandatory)][string]$PackagePath,
+    [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{64}$')][string]$ExpectedSHA256,
     [string]$Probe='build/store/Release/Shell-Probe.exe'
 )
 $ErrorActionPreference='Stop'
@@ -33,19 +33,19 @@ if ($LASTEXITCODE) { throw 'Cannot unpack reviewed candidate' }
 foreach ($field in 'Name','Publisher') {
     if ($manifest.Package.Identity.GetAttribute($field) -cne $official.$field) { throw "Identity mismatch: $field" }
 }
-if ($manifest.Package.Identity.Version -cne '2.0.0.0' -or (Test-Path (Join-Path $layout 'AppxSignature.p7x'))) { throw 'Expected unsigned 2.0.0.0 candidate' }
+if ($manifest.Package.Identity.Version -cne '2.0.1.0' -or (Test-Path (Join-Path $layout 'AppxSignature.p7x'))) { throw 'Expected unsigned 2.0.1.0 candidate' }
 $binaryHashes=@{}
 foreach ($name in 'WinPebble.PNGToJPG.exe','WinPebble.PNGToJPG.Shell.dll') {
     $binaryHashes[$name]=(Get-FileHash -LiteralPath (Join-Path $layout $name)).Hash
 }
 $baseline=@(Get-AppxPackage -Name '*WinPebble*' | Select-Object Name,PackageFullName)
-$result=[ordered]@{ Passed=$false; Input=$PackagePath; InputSHA256=$originalHash; Package=$official.Name; BinaryHashes=$binaryHashes; UpdateVersion='2.0.0.1'; Scope='local signed deployment, not Store delivery'; Steps=@(); CleanupErrors=@() }
+$result=[ordered]@{ Passed=$false; Input=$PackagePath; InputSHA256=$originalHash; Package=$official.Name; BinaryHashes=$binaryHashes; UpdateVersion='2.0.1.1'; Scope='local signed deployment, not Store delivery'; Steps=@(); CleanupErrors=@() }
 $cert=$null
 $ownsPackage=$false
 $trustPath=$null
 $ownsTrust=$false
-$initial=Join-Path $out 'LOCAL-TEST-ONLY-2.0.0.0.msix'
-$update=Join-Path $out 'LOCAL-TEST-ONLY-2.0.0.1.msix'
+$initial=Join-Path $out 'LOCAL-TEST-ONLY-2.0.1.0.msix'
+$update=Join-Path $out 'LOCAL-TEST-ONLY-2.0.1.1.msix'
 Copy-Item -LiteralPath $PackagePath -Destination $initial
 function Test-ExplorerContext([string]$Phase,[switch]$ExpectAbsent,[string]$DirectDll) {
     $workerResult=Join-Path $out ($Phase+'-shell.json')
@@ -92,7 +92,7 @@ try {
     if (Test-Path -LiteralPath $trustPath) { throw 'New certificate unexpectedly already trusted' }
     $ownsTrust=$true
     Import-Certificate -FilePath $public -CertStoreLocation 'Cert:\LocalMachine\TrustedPeople' | Out-Null
-    $manifest.Package.Identity.SetAttribute('Version','2.0.0.1')
+    $manifest.Package.Identity.SetAttribute('Version','2.0.1.1')
     $manifest.Save((Join-Path $layout 'AppxManifest.xml'))
     # Repack only changes the package version; binaries retain candidate metadata.
     & $makeappx pack /d $layout /p $update
@@ -107,7 +107,7 @@ try {
     # Set ownership before deployment so a partially successful install is cleaned.
     $ownsPackage=$true
     Add-AppxPackage -Path $initial
-    $p=Assert-Installed '2.0.0.0'
+    $p=Assert-Installed '2.0.1.0'
     $result.InitialPackageFullName=$p.PackageFullName
     $result.Steps+= 'Signed install + installed binary hashes + registered COM conversion PASS'
     $state=Join-Path $env:LOCALAPPDATA ('Packages\'+$p.PackageFamilyName+'\LocalState')
@@ -119,7 +119,7 @@ try {
     # Let Windows close only processes associated with this target package.
     $result.UpdatePolicy='ForceTargetApplicationShutdown (target test package only)'
     Add-AppxPackage -Path $update -ForceTargetApplicationShutdown
-    $p=Assert-Installed '2.0.0.1'
+    $p=Assert-Installed '2.0.1.1'
     $result.UpdatedPackageFullName=$p.PackageFullName
     if ((Get-Content -LiteralPath $marker -Raw).Trim() -cne $markerValue) { throw 'Update did not preserve LocalState' }
     $result.Steps+= 'Signed update + unchanged binaries + registered COM conversion + LocalState retention PASS'
@@ -142,7 +142,7 @@ try {
         try {
             $left=Get-AppxPackage -Name $official.Name
             if ($left) {
-                if ($left.Publisher -cne $official.Publisher -or [string]$left.Version -notin '2.0.0.0','2.0.0.1') { throw 'Unexpected package state; refusing cleanup' }
+                if ($left.Publisher -cne $official.Publisher -or [string]$left.Version -notin '2.0.1.0','2.0.1.1') { throw 'Unexpected package state; refusing cleanup' }
                 Remove-AppxPackage -Package $left.PackageFullName
             }
             if (Get-AppxPackage -Name $official.Name) { throw 'Test package remains installed' }

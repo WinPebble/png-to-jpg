@@ -15,7 +15,7 @@ $sdk=Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin" -Directory |
     Where-Object { Test-Path (Join-Path $_.FullName 'x64/makeappx.exe') } |
     Sort-Object Name -Descending | Select-Object -First 1
 if (!$sdk) { throw 'Windows SDK MakeAppx not found' }
-$msix=Join-Path $output 'WinPebble-PNG-to-JPG-2.0.0-dev.1-unsigned.msix'
+$msix=Join-Path $output 'WinPebble-PNG-to-JPG-2.0.1-dev.1-unsigned.msix'
 & (Join-Path $sdk.FullName 'x64/makeappx.exe') pack /d $stage /p $msix /o
 if ($LASTEXITCODE) { throw 'MakeAppx validation/pack failed' }
 @{ Layout=$stage; Package=$msix; Identity='WinPebble.PNGToJPG.Dev' } | ConvertTo-Json | Set-Content (Join-Path $output 'layout.json')
